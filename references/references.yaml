@@ -1,0 +1,1235 @@
+task_id: T000018
+generated_at: '2026-02-17T06:56:09Z'
+selection_policy: tiered_mix_high_impact_plus_high_citation_open_access
+citation_threshold: 100
+papers:
+- id: W2003906510
+  title: Glutathione Precursor, N-Acetyl-Cysteine, Improves Mismatch Negativity in
+    Schizophrenia Patients
+  authors:
+  - Suzie Lavoie
+  - Micah M. Murray
+  - Patricia Deppen
+  - Maria G. Knyazeva
+  - Michael Berk
+  - Olivier Boulat
+  - Pascal Bovet
+  - Ashley I. Bush
+  - Philippe Conus
+  - David Copolov
+  - Eleonora Fornari
+  - Reto Meuli
+  year: 2007
+  journal: Neuropsychopharmacology
+  doi_or_url: https://doi.org/10.1038/sj.npp.1301624
+  citation_count: 371
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2096448210
+  title: Contribution of Impaired Early-Stage Visual Processing to Working Memory
+    Dysfunction in Adolescents With Schizophrenia
+  authors:
+  - Corinna Haenschel
+  - Robert A. Bittner
+  - Fabian Haertling
+  - Anna Rotarska-Jagiela
+  - Konrad Maurer
+  - Wolf Singer
+  - David E.J. Linden
+  year: 2007
+  journal: Archives of General Psychiatry
+  doi_or_url: https://doi.org/10.1001/archpsyc.64.11.1229
+  citation_count: 218
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2054283556
+  title: 'Spoken Sentence Comprehension in Aphasia: Event-related Potential Evidence
+    for a Lexical Integration Deficit'
+  authors:
+  - Tamara Y. Swaab
+  - Colin Brown
+  - Peter Hagoort
+  year: 1997
+  journal: Journal of Cognitive Neuroscience
+  doi_or_url: https://doi.org/10.1162/jocn.1997.9.1.39
+  citation_count: 172
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2055970280
+  title: The Effects of a Sub-Anaesthetic Dose of Ketamine on Human Selective Attention
+  authors:
+  - Bob Oranje
+  year: 2000
+  journal: Neuropsychopharmacology
+  doi_or_url: https://doi.org/10.1016/s0893-133x(99)00118-9
+  citation_count: 148
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2014473176
+  title: Enhanced Passive and Active Processing of Syllables in Musician Children
+  authors:
+  - Julie Chobert
+  - Céline Marie
+  - François Clément
+  - Daniele Schön
+  - Mireille Besson
+  year: 2011
+  journal: Journal of Cognitive Neuroscience
+  doi_or_url: https://doi.org/10.1162/jocn_a_00088
+  citation_count: 139
+  is_high_impact: true
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2104699321
+  title: 'Affective picture processing: The late positive potential is modulated by
+    motivational relevance'
+  authors:
+  - Harald T. Schupp
+  - Bruce N. Cuthbert
+  - Margaret M. Bradley
+  - John T. Cacioppo
+  - Tiffany A. Ito
+  - Peter J. Lang
+  year: 2000
+  journal: Psychophysiology
+  doi_or_url: https://doi.org/10.1111/1469-8986.3720257
+  citation_count: 1297
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2552810632
+  title: 'Active Inference: A Process Theory'
+  authors:
+  - Karl Friston
+  - Thomas H. B. FitzGerald
+  - Francesco Rigoli
+  - Philipp Schwartenbeck
+  - Giovanni Pezzulo
+  year: 2016
+  journal: Neural Computation
+  doi_or_url: https://doi.org/10.1162/neco_a_00912
+  citation_count: 1115
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2046007199
+  title: 'Characterization of N200 and P300: Selected Studies of the Event-Related
+    Potential'
+  authors:
+  - Salil Patel
+  - Pierre N. Azzam
+  year: 2005
+  journal: International Journal of Medical Sciences
+  doi_or_url: https://doi.org/10.7150/ijms.2.147
+  citation_count: 784
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1976046014
+  title: 'Transfer of Training between Music and Speech: Common Processing, Attention,
+    and Memory'
+  authors:
+  - Mireille Besson
+  - Julie Chobert
+  - Céline Marie
+  year: 2011
+  journal: Frontiers in Psychology
+  doi_or_url: https://doi.org/10.3389/fpsyg.2011.00094
+  citation_count: 358
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2025693086
+  title: Event-related potential studies of outcome processing and feedback-guided
+    learning
+  authors:
+  - René eSan Martín
+  year: 2012
+  journal: Frontiers in Human Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnhum.2012.00304
+  citation_count: 341
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2097395674
+  title: Regular, brief mindfulness meditation practice improves electrophysiological
+    markers of attentional control
+  authors:
+  - Adam Moore
+  - Thomas Gruber
+  - Jennifer Derose
+  - Peter Malinowski
+  year: 2012
+  journal: Frontiers in Human Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnhum.2012.00018
+  citation_count: 318
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2042485636
+  title: Are Females More Responsive to Emotional Stimuli? A Neurophysiological Study
+    Across Arousal and Valence Dimensions
+  authors:
+  - Chrysa Lithari
+  - Christos A. Frantzidιs
+  - Christos Papadelis
+  - Ana B. Vivas
+  - Manousos A. Klados
+  - Chrysoula Kourtidou‐Papadeli
+  - C. Pappas
+  - Andreas A. Ioannides
+  - Panagiotis D. Bamidis
+  year: 2009
+  journal: Brain Topography
+  doi_or_url: https://doi.org/10.1007/s10548-009-0130-5
+  citation_count: 307
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2082089109
+  title: Neural systems connecting interoceptive awareness and feelings
+  authors:
+  - Olga Pollatos
+  - Klaus Gramann
+  - Rainer Schandry
+  year: 2006
+  journal: Human Brain Mapping
+  doi_or_url: https://doi.org/10.1002/hbm.20258
+  citation_count: 300
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2253787383
+  title: 'Assessing Neurocognition via Gamified Experimental Logic: A Novel Approach
+    to Simultaneous Acquisition of Multiple ERPs'
+  authors:
+  - Ajay Kumar Nair
+  - Arun Sasidharan
+  - John P. John
+  - Seema Mehrotra
+  - Bindu M. Kutty
+  year: 2016
+  journal: Frontiers in Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnins.2016.00001
+  citation_count: 281
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2159217138
+  title: Fast, visual specialization for reading in English revealed by the topography
+    of the N170 ERP response
+  authors:
+  - Urs Maurer
+  - Daniel Brandeis
+  - Bruce D. McCandliss
+  year: 2005
+  journal: Behavioral and Brain Functions
+  doi_or_url: https://doi.org/10.1186/1744-9081-1-13
+  citation_count: 280
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1975898493
+  title: 'A New Auditory Multi-Class Brain-Computer Interface Paradigm: Spatial Hearing
+    as an Informative Cue'
+  authors:
+  - Martijn Schreuder
+  - Benjamin Blankertz
+  - Michael Tangermann
+  year: 2010
+  journal: PLoS ONE
+  doi_or_url: https://doi.org/10.1371/journal.pone.0009813
+  citation_count: 278
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2160665922
+  title: 'Surprise and Error: Common Neuronal Architecture for the Processing of Errors
+    and Novelty'
+  authors:
+  - Jan R. Wessel
+  - Claudia Danielmeier
+  - J. Bruce Morton
+  - Markus Ullsperger
+  year: 2012
+  journal: Journal of Neuroscience
+  doi_or_url: https://doi.org/10.1523/jneurosci.6352-11.2012
+  citation_count: 234
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W4250340983
+  title: 'Guidelines for using human event-related potentials to study cognition:
+    Recording standards and publication criteria'
+  authors:
+  - Terence W. Picton
+  - Shlomo Bentin
+  - Patrick Berg
+  - Emanuel Donchin
+  - S. A. Hillyard
+  - Randall S. Johnson
+  - George Andrew Miller
+  - Walter Ritter
+  - Daniel S. Ruchkin
+  - M.D. RUGG
+  - Margot J. Taylor
+  year: 2000
+  journal: Psychophysiology
+  doi_or_url: https://doi.org/10.1017/s0048577200000305
+  citation_count: 231
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2140984633
+  title: Rapid Prefrontal-Hippocampal Habituation to Novel Events
+  authors:
+  - Shuhei Yamaguchi
+  year: 2004
+  journal: Journal of Neuroscience
+  doi_or_url: https://doi.org/10.1523/jneurosci.4587-03.2004
+  citation_count: 213
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2028377703
+  title: Top-down control over involuntary attention switching in the auditory modality
+  authors:
+  - Elyse Sussman
+  - István Winkler
+  - Erich Schröger
+  year: 2003
+  journal: Psychonomic Bulletin & Review
+  doi_or_url: https://doi.org/10.3758/bf03196525
+  citation_count: 208
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2913191925
+  title: Toward a Neurobiologically Plausible Model of Language-Related, Negative
+    Event-Related Potentials
+  authors:
+  - Ina Bornkessel‐Schlesewsky
+  - Matthias Schlesewsky
+  year: 2019
+  journal: Frontiers in Psychology
+  doi_or_url: https://doi.org/10.3389/fpsyg.2019.00298
+  citation_count: 197
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2277715507
+  title: Distinct β Band Oscillatory Networks Subserving Motor and Cognitive Control
+    during Gait Adaptation
+  authors:
+  - Johanna Wagner
+  - Scott Makeig
+  - Mateusz Gola
+  - Christa Neuper
+  - Gernot Müller-Putz
+  year: 2016
+  journal: Journal of Neuroscience
+  doi_or_url: https://doi.org/10.1523/jneurosci.3543-15.2016
+  citation_count: 196
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2131746767
+  title: A Potential Role of the Inferior Frontal Gyrus and Anterior Insula in Cognitive
+    Control, Brain Rhythms, and Event-Related Potentials
+  authors:
+  - Mattie Tops
+  - Maarten A.S. Boksem
+  year: 2011
+  journal: Frontiers in Psychology
+  doi_or_url: https://doi.org/10.3389/fpsyg.2011.00330
+  citation_count: 192
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2338176068
+  title: Reduced habituation of auditory evoked potentials indicate cortical hyper-excitability
+    in Fragile X Syndrome
+  authors:
+  - Lauren E. Ethridge
+  - Stormi P. White
+  - Matthew W. Mosconi
+  - J. Wang
+  - Matthew Byerly
+  - John A. Sweeney
+  year: 2016
+  journal: Translational Psychiatry
+  doi_or_url: https://doi.org/10.1038/tp.2016.48
+  citation_count: 190
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2150066253
+  title: 'EEG Recorded from the Ear: Characterizing the Ear-EEG Method'
+  authors:
+  - Kaare B. Mikkelsen
+  - Simon L. Kappel
+  - Danilo P. Mandic
+  - Preben Kidmose
+  year: 2015
+  journal: Frontiers in Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnins.2015.00438
+  citation_count: 188
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2159816778
+  title: EEG Correlates of Self-Referential Processing
+  authors:
+  - Gennady G. Knyazev
+  year: 2013
+  journal: Frontiers in Human Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnhum.2013.00264
+  citation_count: 181
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2581399274
+  title: Comparison of the Working Memory Load in N-Back and Working Memory Span Tasks
+    by Means of EEG Frequency Band Power and P300 Amplitude
+  authors:
+  - Christian Scharinger
+  - Alexander Soutschek
+  - Torsten Schubert
+  - Peter Gerjets
+  year: 2017
+  journal: Frontiers in Human Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnhum.2017.00006
+  citation_count: 176
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2155926707
+  title: 'Advance preparation in task-switching: converging evidence from behavioral,
+    brain activation, and model-based approaches'
+  authors:
+  - Frini Karayanidis
+  year: 2010
+  journal: Frontiers in Psychology
+  doi_or_url: https://doi.org/10.3389/fpsyg.2010.00025
+  citation_count: 172
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2063875473
+  title: 'Age, physical fitness, and attention: P3a and P3b'
+  authors:
+  - Matthew B. Pontifex
+  - Charles H. Hillman
+  - John Polich
+  year: 2009
+  journal: Psychophysiology
+  doi_or_url: https://doi.org/10.1111/j.1469-8986.2008.00782.x
+  citation_count: 166
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2015471263
+  title: Ambiguous Figures – What Happens in the Brain When Perception Changes But
+    Not the Stimulus
+  authors:
+  - Jürgen Kornmeier
+  - Michael Bach
+  year: 2012
+  journal: Frontiers in Human Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnhum.2012.00051
+  citation_count: 165
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2089327973
+  title: Timing and Sequence of Brain Activity in Top-Down Control of Visual-Spatial
+    Attention
+  authors:
+  - Tineke Grent-‘t-Jong
+  - Marty G. Woldorff
+  year: 2006
+  journal: PLoS Biology
+  doi_or_url: https://doi.org/10.1371/journal.pbio.0050012
+  citation_count: 162
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2289075896
+  title: Machine learning identification of EEG features predicting working memory
+    performance in schizophrenia and healthy adults
+  authors:
+  - Jason Johannesen
+  - Jinbo Bi
+  - Ruhua Jiang
+  - Joshua Kenney
+  - Chi-Ming Chen
+  year: 2016
+  journal: Neuropsychiatric Electrophysiology
+  doi_or_url: https://doi.org/10.1186/s40810-016-0017-0
+  citation_count: 152
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2886795278
+  title: 'Brief Mindfulness Meditation Improves Attention in Novices: Evidence From
+    ERPs and Moderation by Neuroticism'
+  authors:
+  - Catherine J. Norris
+  - Daniel Creem
+  - Reuben Hendler
+  - Hedy Kober
+  year: 2018
+  journal: Frontiers in Human Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnhum.2018.00315
+  citation_count: 149
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2232213142
+  title: 'Inattentional Deafness: Visual Load Leads to Time-Specific Suppression of
+    Auditory Evoked Responses'
+  authors:
+  - Katharine Molloy
+  - Timothy D. Griffiths
+  - Maria Chait
+  - Nilli Lavie
+  year: 2015
+  journal: Journal of Neuroscience
+  doi_or_url: https://doi.org/10.1523/jneurosci.2931-15.2015
+  citation_count: 149
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2035712106
+  title: 'Music matters: Preattentive musicality of the human brain'
+  authors:
+  - Stefan Koelsch
+  - Erich Schröger
+  - Thomas C. Gunter
+  year: 2002
+  journal: Psychophysiology
+  doi_or_url: https://doi.org/10.1017/s0048577202000185
+  citation_count: 139
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2146189366
+  title: Event-related potentials to task-irrelevant changes in facial expressions
+  authors:
+  - Piia Astikainen
+  - Jari K. Hietanen
+  year: 2009
+  journal: Behavioral and Brain Functions
+  doi_or_url: https://doi.org/10.1186/1744-9081-5-30
+  citation_count: 139
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2104733909
+  title: Effects of risperidone on auditory event-related potentials in schizophrenia
+  authors:
+  - Daniel Umbricht
+  - Daniel C. Javitt
+  - Gerald Novak
+  - John A. Bates
+  - Simcha Pollack
+  - Jeffrey A. Lieberman
+  - John M. Kane
+  year: 1999
+  journal: The International Journal of Neuropsychopharmacology
+  doi_or_url: https://doi.org/10.1017/s1461145799001595
+  citation_count: 138
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1699121519
+  title: 'Chronic Psychophysiological Insomnia: Hyperarousal and/or Inhibition Deficits?
+    An ERPs Investigation'
+  authors:
+  - Célyne Bastien
+  - Geneviève St-Jean
+  - Charles M. Morin
+  - Isabelle Turcotte
+  - Julie Carrier
+  year: 2008
+  journal: SLEEP
+  doi_or_url: https://doi.org/10.1093/sleep/31.6.887
+  citation_count: 129
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1966660644
+  title: 'Electrophysiological correlates of selective attention: A lifespan comparison'
+  authors:
+  - V. Muêller
+  - Yvonne Brehmer
+  - Timo von Oertzen
+  - Shu Li
+  - Ulman Lindenberger
+  year: 2008
+  journal: BMC Neuroscience
+  doi_or_url: https://doi.org/10.1186/1471-2202-9-18
+  citation_count: 127
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2083974633
+  title: A Neurocomputational Model of the Mismatch Negativity
+  authors:
+  - Falk Lieder
+  - Klaas Ε. Stephan
+  - Jean Daunizeau
+  - Marta I. Garrido
+  - Karl Friston
+  year: 2013
+  journal: PLoS Computational Biology
+  doi_or_url: https://doi.org/10.1371/journal.pcbi.1003288
+  citation_count: 126
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1555539005
+  title: Neural generators of the auditory evoked potential components P3a and P3b
+  authors:
+  - Eligiusz Wronka
+  - Jan Christian Kaiser
+  - A.M.L. Coenen
+  year: 2012
+  journal: Acta Neurobiologiae Experimentalis
+  doi_or_url: https://doi.org/10.55782/ane-2012-1880
+  citation_count: 123
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2049775606
+  title: Predictive Suppression of Cortical Excitability and Its Deficit in Schizophrenia
+  authors:
+  - Péter Lakatos
+  - Charles M. Schroeder
+  - David I. Leitman
+  - Daniel C. Javitt
+  year: 2013
+  journal: Journal of Neuroscience
+  doi_or_url: https://doi.org/10.1523/jneurosci.0010-13.2013
+  citation_count: 122
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2154666753
+  title: Brain oscillatory activity associated with task switching and feedback processing
+  authors:
+  - Toni Cunillera
+  - Lluís Fuentemilla
+  - José A. Periáñez
+  - Josep Marco‐Pallarés
+  - Ulrike M. Krämer
+  - Estela Càmara
+  - Thomas F. Münte
+  - Antoni Rodrı́guez-Fornells
+  year: 2011
+  journal: Cognitive Affective & Behavioral Neuroscience
+  doi_or_url: https://doi.org/10.3758/s13415-011-0075-5
+  citation_count: 122
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1983183089
+  title: 'Vegetative versus Minimally Conscious States: A Study Using TMS-EEG, Sensory
+    and Event-Related Potentials'
+  authors:
+  - Roberto Ragazzoni
+  - Cornelia Pirulli
+  - Domenica Veniero
+  - Matteo Feurra
+  - M. Cincotta
+  - Fabio Giovannelli
+  - R. Chiaramonti
+  - Mario Lino
+  - Símone Rossi
+  - Carlo Miniussi
+  year: 2013
+  journal: PLoS ONE
+  doi_or_url: https://doi.org/10.1371/journal.pone.0057069
+  citation_count: 119
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2247664464
+  title: 'Electroencephalography (EEG) as a Research Tool in the Information Systems
+    Discipline: Foundations, Measurement, and Applications'
+  authors:
+  - Gernot Müller-Putz
+  - René Riedl‬
+  - Selina C. Wriessnegger
+  year: 2015
+  journal: Communications of the Association for Information Systems
+  doi_or_url: https://doi.org/10.17705/1cais.03746
+  citation_count: 118
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2080075509
+  title: Two Distinct Dynamic Modes Subtend the Detection of Unexpected Sounds
+  authors:
+  - Jean-Rémi King
+  - Alexandre Gramfort
+  - Aaron Schurger
+  - Lionel Naccache
+  - Stanislas Dehaene
+  year: 2014
+  journal: PLoS ONE
+  doi_or_url: https://doi.org/10.1371/journal.pone.0085791
+  citation_count: 117
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2275229234
+  title: 'Human Pupillary Dilation Response to Deviant Auditory Stimuli: Effects of
+    Stimulus Properties and Voluntary Attention'
+  authors:
+  - Hsin‐I Liao
+  - Makoto Yoneya
+  - Shunsuke Kidani
+  - Makio Kashino
+  - Shigeto Furukawa
+  year: 2016
+  journal: Frontiers in Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnins.2016.00043
+  citation_count: 116
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2585385159
+  title: 'Using Measures of Risk Perception to Predict Information Security Behavior:
+    Insights from Electroencephalography (EEG)'
+  authors:
+  - Anthony Vance
+  - Bonnie Brinton Anderson
+  - C. Brock Kirwan
+  - David Eargle
+  year: 2014
+  journal: Journal of the Association for Information Systems
+  doi_or_url: https://doi.org/10.17705/1jais.00375
+  citation_count: 114
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1972214813
+  title: Effects of age-related hearing loss and background noise on neuromagnetic
+    activity from auditory cortex
+  authors:
+  - Claude Alain
+  - Anja Roye
+  - Claire Salloum
+  year: 2014
+  journal: Frontiers in Systems Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnsys.2014.00008
+  citation_count: 111
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2168555367
+  title: 'Updating of context in working memory: An event-related potential study'
+  authors:
+  - Agatha Lenartowicz
+  - Rafael Escobedo-Quiroz
+  - Jonathan D. Cohen
+  year: 2010
+  journal: Cognitive Affective & Behavioral Neuroscience
+  doi_or_url: https://doi.org/10.3758/cabn.10.2.298
+  citation_count: 111
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2095768191
+  title: 'Methylphenidate improves deficient error evaluation in children with ADHD:
+    An event-related brain potential study'
+  authors:
+  - Lisa M. Jonkman
+  - Jessica. J.M. van Melis
+  - Chantal Kemner
+  - C. Rob Markus
+  year: 2007
+  journal: Biological Psychology
+  doi_or_url: https://doi.org/10.1016/j.biopsycho.2007.08.004
+  citation_count: 110
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2136493862
+  title: Deviant neurophysiological responses to phonological regularities in speech
+    in dyslexic children
+  authors:
+  - Milene Bonte
+  - Hanne Poelmans
+  - Leo Blomert
+  year: 2006
+  journal: Neuropsychologia
+  doi_or_url: https://doi.org/10.1016/j.neuropsychologia.2006.11.009
+  citation_count: 108
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2075620590
+  title: 'The cognitive mechanisms underlying deception: An event-related potential
+    study'
+  authors:
+  - Kristina Suchotzki
+  - Geert Crombez
+  - Fren T.Y. Smulders
+  - Ewout H. Meijer
+  - Bruno Verschuère
+  year: 2015
+  journal: International Journal of Psychophysiology
+  doi_or_url: https://doi.org/10.1016/j.ijpsycho.2015.01.010
+  citation_count: 107
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2331807147
+  title: Effect of Aging on ERP Components of Cognitive Control
+  authors:
+  - Juri D. Kropotov
+  - В. А. Пономарев
+  - Е. П. Терещенко
+  - Andreas Müller
+  - Lutz Jäncke
+  year: 2016
+  journal: Frontiers in Aging Neuroscience
+  doi_or_url: https://doi.org/10.3389/fnagi.2016.00069
+  citation_count: 107
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2037638281
+  title: Computational and statistical methods for analyzing event-related potential
+    data
+  authors:
+  - G.J.M. van Boxtel
+  year: 1998
+  journal: Behavior Research Methods, Instruments, & Computers
+  doi_or_url: https://doi.org/10.3758/bf03209419
+  citation_count: 106
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2059624060
+  title: Schizophrenia Detection and Classification by Advanced Analysis of EEG Recordings
+    Using a Single Electrode Approach
+  authors:
+  - Zack Dvey-Aharon
+  - Noa Fogelson
+  - A. Peled
+  - Nathan Intrator
+  year: 2015
+  journal: PLoS ONE
+  doi_or_url: https://doi.org/10.1371/journal.pone.0123033
+  citation_count: 105
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2142657413
+  title: 'Right hemisphere has the last laugh: neural dynamics of joke appreciation'
+  authors:
+  - Ksenija Marinković
+  - Sharelle Baldwin
+  - M. Courtney
+  - Thomas Witzel
+  - Anders M. Dale
+  - Eric Halgren
+  year: 2010
+  journal: Cognitive Affective & Behavioral Neuroscience
+  doi_or_url: https://doi.org/10.3758/s13415-010-0017-7
+  citation_count: 105
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2067691331
+  title: Mismatch Negativity and Cognitive Performance for the Prediction of Psychosis
+    in Subjects with At-Risk Mental State
+  authors:
+  - Yuko Higuchi
+  - Tomiki Sumiyoshi
+  - Tomonori Seo
+  - Tomohiro Miyanishi
+  - Yasuhiro Kawasaki
+  - Michio Suzuki
+  year: 2013
+  journal: PLoS ONE
+  doi_or_url: https://doi.org/10.1371/journal.pone.0054080
+  citation_count: 105
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2025690712
+  title: 'Effects of Age, Age-Related Hearing Loss, and Contralateral Cafeteria Noise
+    on the Discrimination of Small Frequency Changes: Psychoacoustic and Electrophysiological
+    Measures'
+  authors:
+  - Sibylle Bertoli
+  - Jacek Smurzyński
+  - Rudolf Probst
+  year: 2005
+  journal: Journal of the Association for Research in Otolaryngology
+  doi_or_url: https://doi.org/10.1007/s10162-005-5029-6
+  citation_count: 105
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2152471397
+  title: Reductions in the N1 and P2 Auditory Event-Related Potentials in First-Hospitalized
+    and Chronic Schizophrenia
+  authors:
+  - Dean F. Salisbury
+  - Katie Collins
+  - Robert W. McCarley
+  year: 2009
+  journal: Schizophrenia Bulletin
+  doi_or_url: https://doi.org/10.1093/schbul/sbp003
+  citation_count: 104
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2005082145
+  title: Detection of Near-Threshold Sounds is Independent of EEG Phase in Common
+    Frequency Bands
+  authors:
+  - Benedikt Zoefel
+  - Peter Heil
+  year: 2013
+  journal: Frontiers in Psychology
+  doi_or_url: https://doi.org/10.3389/fpsyg.2013.00262
+  citation_count: 103
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W1990787788
+  title: Schizophrenia as Failure of Left Hemispheric Dominance for the Phonological
+    Component of Language
+  authors:
+  - Alessandro Angrilli
+  - Chiara Spironelli
+  - Thomas Elbert
+  - Timothy J. Crow
+  - Gianfranco Marano
+  - Luciano Stegagno
+  year: 2009
+  journal: PLoS ONE
+  doi_or_url: https://doi.org/10.1371/journal.pone.0004507
+  citation_count: 102
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2118593573
+  title: ERP evidence for different strategies in the processing of case markers in
+    native speakers and non-native learners
+  authors:
+  - Jutta L. Mueller
+  - Masako Hirotani
+  - Angela D. Friederici
+  year: 2007
+  journal: BMC Neuroscience
+  doi_or_url: https://doi.org/10.1186/1471-2202-8-18
+  citation_count: 100
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W4210625095
+  title: 'Classic Psychedelic Drugs: Update on Biological Mechanisms'
+  authors:
+  - Franz X. Vollenweider
+  - John W Smallridge
+  year: 2022
+  journal: Pharmacopsychiatry
+  doi_or_url: https://doi.org/10.1055/a-1721-2914
+  citation_count: 100
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''
+- id: W2168796115
+  title: Predictive coding in autism spectrum disorder and attention deficit hyperactivity
+    disorder
+  authors:
+  - María Luz González-Gadea
+  - Srivas Chennu
+  - Tristán Bekinschtein
+  - Alexia Rattazzi
+  - Ana Beraudi
+  - Paula Tripicchio
+  - Beatriz Moyano
+  - Yamila Soffita
+  - Laura J. Steinberg
+  - Federico Adolfi
+  - Mariano Sigman
+  - Julián Marino
+  year: 2015
+  journal: Journal of Neurophysiology
+  doi_or_url: https://doi.org/10.1152/jn.00543.2015
+  citation_count: 100
+  is_high_impact: false
+  open_access: true
+  used_for:
+  - task_workflow
+  - timing_parameters
+  parameter_bindings: {}
+  notes: ''

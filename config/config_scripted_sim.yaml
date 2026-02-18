@@ -1,0 +1,237 @@
+# ============================================================================
+# Scripted sim config
+# - Used by: python main.py sim --config config/config_scripted_sim.yaml
+# - Scope: scripted simulation only (contains sim section; no qa section)
+# ============================================================================
+
+# === Subject Form ===========================================================
+subinfo_fields:
+  - name: subject_id
+    type: int
+    constraints:
+      min: 101
+      max: 999
+      digits: 3
+
+subinfo_mapping:
+  subject_id: SIM编号
+  Participant Information: 模拟信息
+  registration_failed: 注册失败。
+  registration_successful: 注册成功！
+  invalid_input: 字段 {field} 输入无效
+
+
+# === Display / Window =======================================================
+window:
+  size: [1280, 720]
+  units: pix
+  screen: 0
+  bg_color: black
+  fullscreen: false
+  monitor_width_cm: 35.5
+  monitor_distance_cm: 60
+
+
+# === Task ===================================================================
+task:
+  task_name: oddball_mmn
+  save_path: ./outputs/sim
+  language: Chinese
+  voice_name: zh-CN-YunyangNeural
+  voice_enabled: false
+  total_blocks: 1
+  total_trials: 12
+  trial_per_block: 12
+  conditions: [standard, deviant, target]
+  key_list: ["space"]
+  delta: 1
+  seed_mode: same_across_sub
+
+
+# === Timing =================================================================
+timing:
+  cue_duration: 0.2
+  anticipation_duration: 0.1
+  target_duration: 0.4
+  prefeedback_duration: 0.1
+  feedback_duration: 0.2
+  iti_duration: 0.2
+
+
+# === Stimuli ================================================================
+stimuli:
+  fixation:
+    type: text
+    font: SimHei
+    text: "+"
+    color: white
+    height: 48
+
+  instruction_text:
+    type: text
+    font: SimHei
+    text: |
+      Oddball 任务（脚本模拟）
+
+      仅在目标刺激（★）出现时按空格键。
+      按空格键开始。
+    color: white
+    height: 28
+    wrapWidth: 980
+
+  standard_target:
+    type: text
+    font: SimHei
+    text: "○"
+    color: white
+    height: 64
+
+  deviant_target:
+    type: text
+    font: SimHei
+    text: "△"
+    color: yellow
+    height: 64
+
+  target_target:
+    type: text
+    font: SimHei
+    text: "★"
+    color: red
+    height: 64
+
+  standard_hit_feedback:
+    type: text
+    font: SimHei
+    text: "正确抑制"
+    color: green
+    height: 36
+
+  standard_miss_feedback:
+    type: text
+    font: SimHei
+    text: "误按"
+    color: red
+    height: 36
+
+  deviant_hit_feedback:
+    type: text
+    font: SimHei
+    text: "正确抑制"
+    color: green
+    height: 36
+
+  deviant_miss_feedback:
+    type: text
+    font: SimHei
+    text: "误按"
+    color: red
+    height: 36
+
+  target_hit_feedback:
+    type: text
+    font: SimHei
+    text: "命中"
+    color: green
+    height: 36
+
+  target_miss_feedback:
+    type: text
+    font: SimHei
+    text: "漏按"
+    color: red
+    height: 36
+
+  block_break:
+    type: text
+    font: SimHei
+    text: |
+      脚本模拟区块结束
+      正确率：{accuracy:.1%}
+      得分：{total_score}
+
+      按空格键继续。
+    color: white
+    height: 24
+    wrapWidth: 900
+
+  good_bye:
+    type: text
+    font: SimHei
+    text: |
+      脚本模拟完成
+      总得分：{total_score}
+
+      按空格键退出。
+    color: white
+    height: 28
+    wrapWidth: 900
+
+
+# === Triggers ===============================================================
+triggers:
+  map:
+    exp_onset: 1
+    exp_end: 2
+    block_onset: 10
+    block_end: 11
+    standard_cue_onset: 20
+    deviant_cue_onset: 21
+    target_cue_onset: 22
+    standard_anticipation_onset: 30
+    deviant_anticipation_onset: 31
+    target_anticipation_onset: 32
+    standard_target_onset: 40
+    deviant_target_onset: 41
+    target_target_onset: 42
+    standard_key_press: 50
+    deviant_key_press: 51
+    target_key_press: 52
+    standard_no_response: 60
+    deviant_no_response: 61
+    target_no_response: 62
+    standard_hit_fb_onset: 70
+    standard_miss_fb_onset: 71
+    deviant_hit_fb_onset: 72
+    deviant_miss_fb_onset: 73
+    target_hit_fb_onset: 74
+    target_miss_fb_onset: 75
+    iti_onset: 80
+
+  driver:
+    type: serial_url
+    url: loop://
+    baudrate: 115200
+
+  timing:
+    post_delay_ms: 1
+
+  policy:
+    strict: false
+
+
+# === Trial Controller =======================================================
+controller:
+  standard_prob: 0.65
+  deviant_prob: 0.20
+  target_prob: 0.15
+  randomize_order: true
+  force_first_standard: true
+  enable_logging: true
+
+
+# === Sim ====================================================================
+sim:
+  output_dir: outputs/sim
+  seed: 0
+  participant_id: sim001
+  session_id: sub-sim001_task-oddball_mmn_seed0
+  log_path: outputs/sim/sub-sim001_task-oddball_mmn_seed0_sim_events.jsonl
+  policy: warn
+  default_rt_s: 0.2
+  clamp_rt: false
+  responder:
+    type: scripted
+    kwargs:
+      key: space
+      rt_s: 0.30
