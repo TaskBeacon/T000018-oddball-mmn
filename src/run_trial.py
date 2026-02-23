@@ -2,20 +2,9 @@ from __future__ import annotations
 
 from functools import partial
 
-from psyflow import StimUnit, set_trial_context
+from psyflow import StimUnit, set_trial_context, next_trial_id
 
 # run_trial uses task-specific phase labels via set_trial_context(...).
-
-
-def _next_trial_id(controller) -> int:
-    histories = getattr(controller, "histories", {}) or {}
-    done = 0
-    for items in histories.values():
-        try:
-            done += len(items)
-        except Exception:
-            continue
-    return int(done) + 1
 
 
 def run_trial(
@@ -31,7 +20,7 @@ def run_trial(
 ):
     """Run one oddball trial (standard / deviant / target)."""
     cond = str(condition)
-    trial_id = _next_trial_id(controller)
+    trial_id = next_trial_id()
     keys = list(getattr(settings, "key_list", ["space"]))
     expected_response = cond == "target"
 
@@ -47,7 +36,7 @@ def run_trial(
         cue,
         trial_id=trial_id,
         phase="pre_stim_fixation",
-        deadline_s=float(settings.cue_duration),
+        deadline_s=settings.cue_duration,
         valid_keys=[],
         block_id=block_id,
         condition_id=cond,
@@ -65,7 +54,7 @@ def run_trial(
         anticipation,
         trial_id=trial_id,
         phase="pre_stim_jitter",
-        deadline_s=float(settings.anticipation_duration),
+        deadline_s=settings.anticipation_duration,
         valid_keys=[],
         block_id=block_id,
         condition_id=cond,
@@ -83,7 +72,7 @@ def run_trial(
         target,
         trial_id=trial_id,
         phase="oddball_response_window",
-        deadline_s=float(settings.target_duration),
+        deadline_s=settings.target_duration,
         valid_keys=keys,
         block_id=block_id,
         condition_id=cond,
@@ -123,7 +112,7 @@ def run_trial(
         prefeedback,
         trial_id=trial_id,
         phase="post_stim_fixation",
-        deadline_s=float(settings.prefeedback_duration),
+        deadline_s=settings.prefeedback_duration,
         valid_keys=[],
         block_id=block_id,
         condition_id=cond,
@@ -139,7 +128,7 @@ def run_trial(
         feedback,
         trial_id=trial_id,
         phase="outcome_feedback",
-        deadline_s=float(settings.feedback_duration),
+        deadline_s=settings.feedback_duration,
         valid_keys=[],
         block_id=block_id,
         condition_id=cond,
@@ -165,7 +154,7 @@ def run_trial(
         iti,
         trial_id=trial_id,
         phase="inter_trial_interval",
-        deadline_s=float(settings.iti_duration),
+        deadline_s=settings.iti_duration,
         valid_keys=[],
         block_id=block_id,
         condition_id=cond,

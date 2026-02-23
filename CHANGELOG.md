@@ -2,9 +2,12 @@
 
 All notable development changes for `T000018-oddball-mmn` are documented here.
 
-## [0.1.0] - 2026-02-17
+## [Unreleased]
 
-### Added
+### Changed
+- Refactored `src/run_trial.py` to use `psyflow`'s native `next_trial_id()` and removed legacy internal `_next_trial_id` boilerplate.
+
+## [0.1.0] - 2026-02-17
 - Added initial PsyFlow/TAPS task scaffold for Oddball Task (MMN/P3).
 - Added mode-aware runtime (`human|qa|sim`) in `main.py`.
 - Added split configs (`config.yaml`, `config_qa.yaml`, `config_scripted_sim.yaml`, `config_sampler_sim.yaml`).
