@@ -2,181 +2,149 @@
 
 ![Maturity: draft](https://img.shields.io/badge/Maturity-draft-64748b?style=flat-square&labelColor=111827)
 
-| Field                | Value                                        |
-|----------------------|----------------------------------------------|
-| Name                 | Oddball Task (MMN/P3)                        |
-| Version              | v0.1.0-dev                                   |
-| URL / Repository     | https://github.com/TaskBeacon/T000018-oddball-mmn |
-| Short Description    | Three-stimulus oddball paradigm for MMN/P3-related novelty and target detection processes |
-| Created By           | TaskBeacon                                   |
-| Date Updated         | 2026-02-17                                   |
-| PsyFlow Version      | 0.1.9                                        |
-| PsychoPy Version     | 2025.1.1                                     |
-| Modality             | EEG                                          |
-| Language             | Chinese                                      |
-| Voice Name           | zh-CN-YunyangNeural                          |
+| Field | Value |
+|---|---|
+| Name | Oddball Task (MMN/P3) |
+| Version | v0.2.0-dev |
+| URL / Repository | https://github.com/TaskBeacon/T000018-oddball-mmn |
+| Short Description | Three-stimulus visual oddball task for MMN/P3-style novelty and target detection ERP paradigms |
+| Created By | TaskBeacon |
+| Date Updated | 2026-02-24 |
+| PsyFlow Version | 0.1.9 |
+| PsychoPy Version | 2025.1.1 |
+| Modality | EEG |
+| Language | Chinese |
+| Voice Name | zh-CN-YunyangNeural |
 
 ## 1. Task Overview
 
-This task implements a three-stimulus oddball paradigm with `standard`, `deviant`, and `target` trials. Participants are instructed to press `space` only when the target stimulus appears, while withholding responses to standard and deviant stimuli. The runtime supports `human`, `qa`, and `sim` modes and uses a controller to generate oddball trial sequences by probability, with block-level performance summaries and stage-wise trigger emission for EEG synchronization.
+This task implements a three-stimulus oddball paradigm with `standard`, `deviant`, and `target` conditions. Participants respond only to `target` stimuli (space key) and withhold responses to `standard` and `deviant` stimuli. The task supports `human`, `qa`, and `sim` modes.
+
+This repair removes an inherited MID-style state machine (`cue -> anticipation -> target -> feedback`) and replaces it with an oddball-appropriate trial flow (`fixation -> stimulus response window -> ITI`) aligned with the paradigm described in `references/task_logic_audit.md`.
 
 ## 2. Task Flow
 
 ### Block-Level Flow
 
 | Step | Description |
-|------|-------------|
-| 1. Parse mode and load config | `main.py` parses `human/qa/sim` options, then loads the selected YAML profile. |
-| 2. Resolve participant context | Human mode collects subject info from GUI; QA uses fixed `subject_id=qa`; sim uses participant ID from simulation context. |
-| 3. Initialize runtime | Build `TaskSettings`, initialize trigger runtime (mock in QA/sim), window, keyboard, and preload stimuli with `StimBank`. |
-| 4. Initialize controller | `Controller.from_dict(...)` loads oddball sequence parameters (`standard_prob`, `deviant_prob`, `target_prob`, etc.). |
-| 5. Start experiment | Emit `exp_onset`, then display instruction screen and wait for continue key. |
-| 6. Enter block loop | For each block, optionally show countdown (human mode), then call `controller.prepare_block(...)` to generate planned oddball conditions. |
-| 7. Run block trials | `BlockUnit` receives planned conditions via `.add_condition(...)`, emits `block_onset` and `block_end`, and executes `run_trial(...)` for each condition. |
-| 8. Compute block feedback | After each block, compute accuracy from trial `target_hit` values and compute total score from `feedback_delta`. |
-| 9. Show block break | Present `block_break` with block index, accuracy, and score; wait for continue key. |
-| 10. Finalize and save | Show `good_bye` summary, emit `exp_end`, save all trial records to CSV, close trigger runtime, and quit PsychoPy. |
+|---|---|
+| 1. Parse mode and load config | `main.py` loads one of `config/config*.yaml` and resolves `human`, `qa`, or `sim` runtime context. |
+| 2. Initialize runtime | Build `TaskSettings`, window/keyboard, trigger runtime, and `StimBank`; preload all stimuli. |
+| 3. Show instructions | Present config-defined Chinese instructions and wait for continue key (`space`). |
+| 4. Generate conditions | `BlockUnit.generate_conditions(...)` creates weighted oddball condition labels from `condition_generation.weights`. |
+| 5. Run trials | `run_trial(...)` executes fixation -> oddball stimulus response window -> ITI for each condition. |
+| 6. Summarize block | Compute `overall_accuracy`, `target_hit_rate`, and non-target `false_alarm_rate`; display `block_break`. |
+| 7. Finalize | Display `good_bye`, emit `exp_end`, save CSV, close triggers, quit PsychoPy. |
 
 ### Trial-Level Flow
 
 | Step | Description |
-|------|-------------|
-| 1. Setup trial state | Determine condition (`standard/deviant/target`), assign trial ID, and set expected response (`target` requires response). |
-| 2. Cue phase | Show fixation for `cue_duration` and emit condition-specific cue onset trigger (`standard_cue_onset`, `deviant_cue_onset`, or `target_cue_onset`). |
-| 3. Anticipation phase | Show fixation for `anticipation_duration` and emit condition-specific anticipation onset trigger (`standard_anticipation_onset`, `deviant_anticipation_onset`, or `target_anticipation_onset`). |
-| 4. Target phase | Present condition-specific target stimulus for `target_duration`, capture `space` response, emit condition-specific target onset/response/timeout triggers. |
-| 5. Trial scoring | Compute `response_made`, `hit`, and `delta`: target trials are hit when responded; non-target trials are hit when no response. |
-| 6. Pre-feedback phase | Show fixation for `prefeedback_duration`. |
-| 7. Feedback phase | Show condition- and outcome-specific feedback stimulus (`{condition}_hit_feedback` or `{condition}_miss_feedback`) for `feedback_duration` with matching feedback trigger. |
-| 8. ITI phase | Show fixation for `iti_duration` and emit `iti_onset`. |
-| 9. Controller update | Update condition-specific performance history in controller and return trial dictionary. |
+|---|---|
+| 1. Trial setup | Read condition (`standard`, `deviant`, `target`), assign `trial_id`, determine `expected_response`. |
+| 2. `trial_fixation` | Show central fixation for `timing.fixation_duration`; emit `fixation_onset`. |
+| 3. `oddball_response_window` | Present condition-specific symbol (`*_stimulus`) for `timing.stimulus_duration`; capture response; emit stimulus/response/timeout triggers. |
+| 4. Outcome classification | Classify trial as `hit`, `miss`, `false_alarm`, or `correct_rejection`; set `accuracy` and `score_delta`. |
+| 5. `inter_trial_interval` | Show fixation for `timing.iti_duration`; emit `iti_onset`. |
 
 ### Controller Logic
 
 | Component | Description |
-|-----------|-------------|
-| Probability normalization | Controller normalizes `standard_prob`, `deviant_prob`, and `target_prob` so their sum equals 1.0. |
-| Count allocation | For each block, expected condition counts are computed from probabilities and adjusted to exactly match `trial_per_block`. |
-| Rare-condition guarantee | For practical oddball runs (`n_trials >= 3`), controller ensures at least one `deviant` and one `target` trial. |
-| Sequence randomization | Planned conditions are shuffled when `randomize_order=true`. |
-| First-trial stabilization | When `force_first_standard=true`, first trial is set to `standard` if available. |
-| Performance logging | `update(hit, condition)` appends condition-specific hit history and logs running condition accuracy when enabled. |
+|---|---|
+| Adaptive RT controller | Not used. This task does not require dynamic RT-window/staircase control. |
+| Condition generation | PsyFlow `BlockUnit.generate_conditions(...)` built-in weighted generation is used. |
+| Optional stabilization | `main.py` optionally moves a configured label (default `standard`) to the first trial to avoid starting a block with a rare event. |
 
 ### Other Logic
 
 | Component | Description |
-|-----------|-------------|
-| Mode-specific output plumbing | QA and sim modes write outputs to mode-specific directories and use runtime context for reproducible session metadata. |
-| Trigger safety in QA/sim | QA and sim use mock trigger runtime to preserve event logs without requiring hardware access. |
-| Trial context for responders | Each stage uses `set_trial_context(...)` to expose condition, phase, deadlines, and factors for scripted/sampler responders. |
+|---|---|
+| Mode-aware output plumbing | QA/sim runs use `context_from_config(...)` and `runtime_context(...)` for reproducible output directories and session metadata. |
+| Trigger runtime in QA/sim | QA and sim use mock triggers; human mode uses configured trigger driver. |
+| Responder context | `set_trial_context(...)` is set for fixation, oddball response window, and ITI phases to support scripted/sampler responders. |
+| Block metrics | Metrics are computed from trial outcome labels instead of feedback screens. |
 
 ### Runtime Context Phases
+
 | Phase Label | Meaning |
 |---|---|
-| `pre_stim_fixation` | pre stim fixation stage in `src/run_trial.py` responder context. |
-| `pre_stim_jitter` | pre stim jitter stage in `src/run_trial.py` responder context. |
-| `oddball_response_window` | oddball response window stage in `src/run_trial.py` responder context. |
-| `post_stim_fixation` | post stim fixation stage in `src/run_trial.py` responder context. |
-| `outcome_feedback` | outcome feedback stage in `src/run_trial.py` responder context. |
-| `inter_trial_interval` | inter trial interval stage in `src/run_trial.py` responder context. |
+| `trial_fixation` | Pre-stimulus fixation phase |
+| `oddball_response_window` | Stimulus presentation and response capture phase |
+| `inter_trial_interval` | Post-stimulus fixation ITI phase |
 
 ## 3. Configuration Summary
 
-All settings are defined in `config/config.yaml`.
+All settings are defined in `config/config.yaml` (human) and parallel QA/sim profiles.
 
 ### a. Subject Info
 
 | Field | Meaning |
-|-------|---------|
-| subject_id | Required participant ID (3-digit integer, range 101-999). |
+|---|---|
+| `subject_id` | Participant identifier (3-digit integer in GUI mode; fixed IDs in QA/sim). |
 
 ### b. Window Settings
 
 | Parameter | Value |
-|-----------|-------|
-| size | `[1280, 720]` |
-| units | `pix` |
-| screen | `0` |
-| bg_color | `black` |
-| fullscreen | `false` |
-| monitor_width_cm | `35.5` |
-| monitor_distance_cm | `60` |
+|---|---|
+| `size` | `[1280, 720]` |
+| `units` | `pix` |
+| `bg_color` | `black` |
+| `fullscreen` | `false` |
+| `monitor_width_cm` | `35.5` |
+| `monitor_distance_cm` | `60` |
 
 ### c. Stimuli
 
-| Name | Type | Description |
-|------|------|-------------|
-| fixation | text | Central fixation cross used for cue, pre-feedback, and ITI stages. |
-| instruction_text | text | Chinese instruction: respond only to target stimulus (`★`) using `space`. |
-| standard_target | text | Standard oddball stimulus (`○`). |
-| deviant_target | text | Deviant oddball stimulus (`△`). |
-| target_target | text | Target oddball stimulus (`★`) requiring key press. |
-| standard_hit_feedback | text | Feedback when correctly withholding response on standard trial. |
-| standard_miss_feedback | text | Feedback when false alarm occurs on standard trial. |
-| deviant_hit_feedback | text | Feedback when correctly withholding response on deviant trial. |
-| deviant_miss_feedback | text | Feedback when false alarm occurs on deviant trial. |
-| target_hit_feedback | text | Feedback when target is correctly detected. |
-| target_miss_feedback | text | Feedback when target is missed. |
-| block_break | text | Inter-block summary (accuracy and score). |
-| good_bye | text | End-of-task summary with total score. |
+| Stimulus ID | Type | Description |
+|---|---|---|
+| `fixation` | text | Central fixation cross used in fixation and ITI phases |
+| `instruction_text` | text | Chinese instructions (SimHei font) |
+| `standard_stimulus` | text | Frequent non-target symbol |
+| `deviant_stimulus` | text | Infrequent non-target deviant symbol |
+| `target_stimulus` | text | Infrequent target symbol requiring `space` |
+| `block_break` | text | Block summary screen with accuracy/hit/false-alarm metrics |
+| `good_bye` | text | Final summary screen |
 
 ### d. Timing
 
-| Phase | Duration |
-|-------|----------|
-| cue | `0.3 s` |
-| anticipation | `0.2 s` |
-| target | `0.5 s` |
-| prefeedback | `0.2 s` |
-| feedback | `0.4 s` |
-| iti | `0.5 s` |
+| Parameter | Human | QA/Sim |
+|---|---:|---:|
+| `fixation_duration` | `0.3 s` | `0.2 s` |
+| `stimulus_duration` | `0.5 s` | `0.4 s` |
+| `iti_duration` | `0.5 s` | `0.2 s` |
 
 ### e. Triggers
 
 | Event | Code |
-|-------|------|
-| exp_onset | 1 |
-| exp_end | 2 |
-| block_onset | 10 |
-| block_end | 11 |
-| standard_cue_onset | 20 |
-| deviant_cue_onset | 21 |
-| target_cue_onset | 22 |
-| standard_anticipation_onset | 30 |
-| deviant_anticipation_onset | 31 |
-| target_anticipation_onset | 32 |
-| standard_target_onset | 40 |
-| deviant_target_onset | 41 |
-| target_target_onset | 42 |
-| standard_key_press | 50 |
-| deviant_key_press | 51 |
-| target_key_press | 52 |
-| standard_no_response | 60 |
-| deviant_no_response | 61 |
-| target_no_response | 62 |
-| standard_hit_fb_onset | 70 |
-| standard_miss_fb_onset | 71 |
-| deviant_hit_fb_onset | 72 |
-| deviant_miss_fb_onset | 73 |
-| target_hit_fb_onset | 74 |
-| target_miss_fb_onset | 75 |
-| iti_onset | 80 |
+|---|---:|
+| `exp_onset` / `exp_end` | `1` / `2` |
+| `block_onset` / `block_end` | `10` / `11` |
+| `fixation_onset` | `20` |
+| `standard_stimulus_onset` / `deviant_stimulus_onset` / `target_stimulus_onset` | `40` / `41` / `42` |
+| `standard_key_press` / `deviant_key_press` / `target_key_press` | `50` / `51` / `52` |
+| `standard_no_response` / `deviant_no_response` / `target_no_response` | `60` / `61` / `62` |
+| `iti_onset` | `80` |
 
-### f. Adaptive Controller
+### f. Condition Generation
 
-| Parameter | Value |
-|-----------|-------|
-| standard_prob | `0.70` |
-| deviant_prob | `0.20` |
-| target_prob | `0.10` |
-| randomize_order | `true` |
-| force_first_standard | `true` |
-| enable_logging | `true` |
+| Parameter | Human | QA/Sim |
+|---|---|---|
+| `weights.standard` | `0.70` | `0.65` |
+| `weights.deviant` | `0.20` | `0.20` |
+| `weights.target` | `0.10` | `0.15` |
+| `order` | `random` | `random` |
+| `first_trial_label` | `standard` | `standard` |
+
+### g. Adaptive Controller (if present)
+
+| Item | Status |
+|---|---|
+| Adaptive controller | Not used for this task |
+| Rationale | Oddball task does not require dynamic RT threshold or staircase updates |
 
 ## 4. Methods (for academic publication)
 
-Participants completed a three-stimulus oddball task designed to probe novelty processing and target detection mechanisms relevant to MMN/P3 analysis. The paradigm contained standard, deviant, and target trials, and participants were instructed to respond only to the target stimulus (`★`) by pressing the space key while withholding responses to standard (`○`) and deviant (`△`) stimuli. The task was configured for three blocks with 90 trials per block (270 total trials), using probabilistic condition scheduling.
+Participants completed a three-stimulus visual oddball task designed for MMN/P3-style ERP analyses of novelty processing and target detection. Each trial belonged to one of three conditions: frequent `standard`, infrequent `deviant`, or infrequent `target`. Participants were instructed to press the space key only for `target` stimuli and to withhold responses to non-target stimuli.
 
-Each trial began with a brief fixation cue (0.3 s), followed by a short anticipation fixation period (0.2 s), then the oddball stimulus (0.5 s) during which responses were recorded. A pre-feedback fixation (0.2 s) preceded feedback (0.4 s), and each trial ended with an inter-trial fixation interval (0.5 s). Trial outcomes were scored as hits when behavior matched condition requirements (press on target; withhold on non-target), and condition-specific feedback was presented accordingly.
+Trials were implemented as a fixation period, followed by a stimulus presentation/response window, followed by an inter-trial interval (ITI). Condition identity determined the displayed visual symbol and the stimulus onset trigger code. Behavioral outcomes were classified as `hit`, `miss`, `false_alarm`, or `correct_rejection`, and summary metrics (overall accuracy, target hit rate, and non-target false alarm rate) were reported at block and task end.
 
-Condition order within each block was generated by a controller that normalized configured probabilities and converted them into trial counts per block, with randomization and first-trial standard stabilization enabled. Event triggers were emitted at experiment, block, stimulus, response, and feedback stages to support synchronization with EEG acquisition and reproducible event-level analysis.
+Condition sequences were generated using PsyFlow's built-in weighted block condition generator from config-defined weights, with optional first-trial stabilization to a `standard` event for practical block starts. This design keeps the task implementation auditable and avoids paradigm-irrelevant template state machines.

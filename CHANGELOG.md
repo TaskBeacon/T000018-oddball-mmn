@@ -4,8 +4,27 @@ All notable development changes for `T000018-oddball-mmn` are documented here.
 
 ## [Unreleased]
 
+### Added
+- Added `references/task_logic_audit.md` with a literature-first oddball state machine audit (`fixation -> stimulus response window -> ITI`) and architecture decisions.
+
 ### Changed
-- Refactored `src/run_trial.py` to use `psyflow`'s native `next_trial_id()` and removed legacy internal `_next_trial_id` boilerplate.
+- Repaired `main.py` to use PsyFlow-first weighted `BlockUnit.generate_conditions(...)` instead of a task-specific oddball controller.
+- Repaired `src/run_trial.py` from MID-style phases to an oddball-appropriate trial flow with outcome classification (`hit`, `miss`, `false_alarm`, `correct_rejection`).
+- Replaced `controller` config sections with `condition_generation` and simplified triggers/timing to oddball-relevant phases.
+- Updated `responders/task_sampler.py` to use canonical phase `oddball_response_window`.
+- Rewrote `README.md`, `references/stimulus_mapping.md`, and `references/parameter_mapping.md` to match the repaired paradigm.
+
+### Fixed
+- Fixed missing required artifact `references/task_logic_audit.md` (task-build standard check failure).
+- Fixed participant-facing Chinese text and symbol stimuli in `config/*.yaml` by rewriting configs as UTF-8.
+
+### Verified
+- `python -m py_compile main.py src/run_trial.py responders/task_sampler.py`
+- `python e:\\Taskbeacon\\psyflow\\skills\\task-build\\scripts\\check_task_standard.py --task-path e:\\Taskbeacon\\T000018-oddball-mmn`
+- `python -m psyflow.validate e:\\Taskbeacon\\T000018-oddball-mmn`
+- `python main.py qa --config config/config_qa.yaml`
+- `python main.py sim --config config/config_scripted_sim.yaml`
+- `python main.py sim --config config/config_sampler_sim.yaml`
 
 ## [0.1.0] - 2026-02-17
 - Added initial PsyFlow/TAPS task scaffold for Oddball Task (MMN/P3).

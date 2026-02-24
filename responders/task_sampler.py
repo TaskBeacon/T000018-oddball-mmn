@@ -67,8 +67,8 @@ class TaskSamplerResponder:
         factors = dict(obs.task_factors or {})
         condition = str(factors.get("condition", ""))
 
-        if phase != "target":
-            # Let scripted progression continue on non-target input screens if needed.
+        if phase != "oddball_response_window":
+            # Continue instruction/break screens that wait for a key press.
             return Action(
                 key=chosen_key,
                 rt_s=rt_s,

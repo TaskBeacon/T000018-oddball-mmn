@@ -1,7 +1,5 @@
 # ============================================================================
-# Scripted sim config
-# - Used by: python main.py sim --config config/config_scripted_sim.yaml
-# - Scope: scripted simulation only (contains sim section; no qa section)
+# Scripted Sim config
 # ============================================================================
 
 # === Subject Form ===========================================================
@@ -50,11 +48,8 @@ task:
 
 # === Timing =================================================================
 timing:
-  cue_duration: 0.2
-  anticipation_duration: 0.1
-  target_duration: 0.4
-  prefeedback_duration: 0.1
-  feedback_duration: 0.2
+  fixation_duration: 0.2
+  stimulus_duration: 0.4
   iti_duration: 0.2
 
 
@@ -73,83 +68,47 @@ stimuli:
     text: |
       Oddball 任务（脚本模拟）
 
+      屏幕会呈现三类刺激：标准（○）、偏差（△）、目标（★）\u3002
       仅在目标刺激（★）出现时按空格键。
+      标准和偏差刺激出现时不要按键。
+
+      请尽量保持注视中央并减少眨眼。
       按空格键开始。
     color: white
     height: 28
     wrapWidth: 980
 
-  standard_target:
+  standard_stimulus:
     type: text
     font: SimHei
     text: "○"
     color: white
     height: 64
 
-  deviant_target:
+  deviant_stimulus:
     type: text
     font: SimHei
     text: "△"
     color: yellow
     height: 64
 
-  target_target:
+  target_stimulus:
     type: text
     font: SimHei
     text: "★"
     color: red
     height: 64
 
-  standard_hit_feedback:
-    type: text
-    font: SimHei
-    text: "正确抑制"
-    color: green
-    height: 36
-
-  standard_miss_feedback:
-    type: text
-    font: SimHei
-    text: "误按"
-    color: red
-    height: 36
-
-  deviant_hit_feedback:
-    type: text
-    font: SimHei
-    text: "正确抑制"
-    color: green
-    height: 36
-
-  deviant_miss_feedback:
-    type: text
-    font: SimHei
-    text: "误按"
-    color: red
-    height: 36
-
-  target_hit_feedback:
-    type: text
-    font: SimHei
-    text: "命中"
-    color: green
-    height: 36
-
-  target_miss_feedback:
-    type: text
-    font: SimHei
-    text: "漏按"
-    color: red
-    height: 36
-
   block_break:
     type: text
     font: SimHei
     text: |
       脚本模拟区块结束
-      正确率：{accuracy:.1%}
-      得分：{total_score}
-
+      第 {block_num}/{total_blocks} 区块结束
+      总体正确率：{overall_accuracy:.1%}
+      目标命中率：{target_hit_rate:.1%}
+      非目标误报率：{false_alarm_rate:.1%}
+      
       按空格键继续。
     color: white
     height: 24
@@ -160,8 +119,10 @@ stimuli:
     font: SimHei
     text: |
       脚本模拟完成
-      总得分：{total_score}
-
+      总体正确率：{overall_accuracy:.1%}
+      目标命中率：{target_hit_rate:.1%}
+      非目标误报率：{false_alarm_rate:.1%}
+      
       按空格键退出。
     color: white
     height: 28
@@ -175,27 +136,16 @@ triggers:
     exp_end: 2
     block_onset: 10
     block_end: 11
-    standard_cue_onset: 20
-    deviant_cue_onset: 21
-    target_cue_onset: 22
-    standard_anticipation_onset: 30
-    deviant_anticipation_onset: 31
-    target_anticipation_onset: 32
-    standard_target_onset: 40
-    deviant_target_onset: 41
-    target_target_onset: 42
+    fixation_onset: 20
+    standard_stimulus_onset: 40
+    deviant_stimulus_onset: 41
+    target_stimulus_onset: 42
     standard_key_press: 50
     deviant_key_press: 51
     target_key_press: 52
     standard_no_response: 60
     deviant_no_response: 61
     target_no_response: 62
-    standard_hit_fb_onset: 70
-    standard_miss_fb_onset: 71
-    deviant_hit_fb_onset: 72
-    deviant_miss_fb_onset: 73
-    target_hit_fb_onset: 74
-    target_miss_fb_onset: 75
     iti_onset: 80
 
   driver:
@@ -210,15 +160,14 @@ triggers:
     strict: false
 
 
-# === Trial Controller =======================================================
-controller:
-  standard_prob: 0.65
-  deviant_prob: 0.20
-  target_prob: 0.15
-  randomize_order: true
-  force_first_standard: true
-  enable_logging: true
-
+# === Condition Generation ===================================================
+condition_generation:
+  weights:
+    standard: 0.65
+    deviant: 0.2
+    target: 0.15
+  order: random
+  first_trial_label: standard
 
 # === Sim ====================================================================
 sim:

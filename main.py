@@ -1,3 +1,4 @@
+from contextlib import nullcontext
 from functools import partial
 from pathlib import Path
 
@@ -20,13 +21,7 @@ from psyflow import (
     runtime_context,
 )
 
-from src import Controller, run_trial
-
-
-def _make_qa_trigger_runtime():
-    # In QA mode we don't want to hit real hardware.
-    # Trigger logging (planned/executed) is handled by TriggerRuntime.
-    return initialize_triggers(mock=True)
+from src import run_trial
 
 
 MODES = ("human", "qa", "sim")
@@ -37,114 +32,160 @@ DEFAULT_CONFIG_BY_MODE = {
 }
 
 
-def _parse_args(task_root: Path) -> TaskRunOptions:
-    return parse_task_run_options(
-        task_root=task_root,
-        description="Run Oddball Task (MMN/P3) in human/qa/sim mode.",
-        default_config_by_mode=DEFAULT_CONFIG_BY_MODE,
-        modes=MODES,
-    )
+def _resolve_generation_settings(settings: TaskSettings, condition_generation: dict | None) -> tuple[list[float] | None, str, str | None]:
+    cfg = condition_generation or {}
+
+    weights = None
+    raw_weights = cfg.get("weights")
+    if isinstance(raw_weights, dict):
+        weights = [float(raw_weights.get(str(label), 1.0)) for label in settings.conditions]
+    elif isinstance(raw_weights, list) and len(raw_weights) == len(settings.conditions):
+        weights = [float(w) for w in raw_weights]
+
+    order = str(cfg.get("order", "random")).lower()
+    if order not in {"random", "sequential"}:
+        order = "random"
+
+    first_trial_label = cfg.get("first_trial_label")
+    if first_trial_label is not None:
+        first_trial_label = str(first_trial_label)
+
+    return weights, order, first_trial_label
+
+
+def _stabilize_first_trial_label(sequence: list[str], label: str | None) -> list[str]:
+    if not sequence or not label:
+        return sequence
+    try:
+        idx = sequence.index(label)
+    except ValueError:
+        return sequence
+    if idx > 0:
+        sequence[0], sequence[idx] = sequence[idx], sequence[0]
+    return sequence
+
+
+def _compute_block_metrics(block_trials: list[dict]) -> dict:
+    if not block_trials:
+        return {
+            "overall_accuracy": 0.0,
+            "target_hit_rate": 0.0,
+            "false_alarm_rate": 0.0,
+        }
+
+    total_n = len(block_trials)
+    overall_accuracy = sum(bool(t.get("accuracy", False)) for t in block_trials) / total_n
+
+    target_trials = [t for t in block_trials if str(t.get("condition")) == "target"]
+    non_target_trials = [t for t in block_trials if str(t.get("condition")) != "target"]
+
+    target_hits = sum(str(t.get("outcome")) == "hit" for t in target_trials)
+    non_target_false_alarms = sum(str(t.get("outcome")) == "false_alarm" for t in non_target_trials)
+
+    target_hit_rate = target_hits / len(target_trials) if target_trials else 0.0
+    false_alarm_rate = non_target_false_alarms / len(non_target_trials) if non_target_trials else 0.0
+
+    return {
+        "overall_accuracy": overall_accuracy,
+        "target_hit_rate": target_hit_rate,
+        "false_alarm_rate": false_alarm_rate,
+    }
 
 
 def run(options: TaskRunOptions):
+    """Run oddball task in human/qa/sim mode with one auditable flow."""
     task_root = Path(__file__).resolve().parent
-    cfg = load_config(str(options.config_path))
-    mode = options.mode
+    cfg = load_config(str(options.config_path), extra_keys=["condition_generation"])
+    print(f"[Oddball MMN/P3] mode={options.mode} config={options.config_path}")
 
-    if mode in ("qa", "sim"):
-        ctx = context_from_config(task_dir=task_root, config=cfg, mode=mode)
-        sim_participant = "sim"
-        if ctx.session is not None:
-            sim_participant = str(ctx.session.participant_id or "sim")
-        with runtime_context(ctx):
-            _run_impl(mode=mode, output_dir=ctx.output_dir, cfg=cfg, participant_id=sim_participant)
-    else:
-        _run_impl(mode=mode, output_dir=None, cfg=cfg, participant_id="human")
+    output_dir: Path | None = None
+    runtime_scope = nullcontext()
+    runtime_ctx = None
+    if options.mode in ("qa", "sim"):
+        runtime_ctx = context_from_config(task_dir=task_root, config=cfg, mode=options.mode)
+        output_dir = runtime_ctx.output_dir
+        runtime_scope = runtime_context(runtime_ctx)
 
+    with runtime_scope:
+        if options.mode == "human":
+            subform = SubInfo(cfg["subform_config"])
+            subject_data = subform.collect()
+        elif options.mode == "qa":
+            subject_data = {"subject_id": "qa"}
+        else:
+            participant_id = "sim"
+            if runtime_ctx is not None and runtime_ctx.session is not None:
+                participant_id = str(runtime_ctx.session.participant_id or "sim")
+            subject_data = {"subject_id": participant_id}
 
-def _run_impl(*, mode: str, output_dir: Path | None, cfg: dict, participant_id: str):
-    # 2. Collect subject info (skip GUI in QA mode)
-    if mode == "qa":
-        subject_data = {"subject_id": "qa"}
-    elif mode == "sim":
-        subject_data = {"subject_id": participant_id}
-    else:
-        subform = SubInfo(cfg["subform_config"])
-        subject_data = subform.collect()
+        settings = TaskSettings.from_dict(cfg["task_config"])
+        if options.mode in ("qa", "sim") and output_dir is not None:
+            settings.save_path = str(output_dir)
+        settings.add_subinfo(subject_data)
 
-    # 3. Load task settings
-    settings = TaskSettings.from_dict(cfg["task_config"])
-    if mode in ("qa", "sim") and output_dir is not None:
-        settings.save_path = str(output_dir)
+        if options.mode == "qa" and output_dir is not None:
+            output_dir.mkdir(parents=True, exist_ok=True)
+            settings.res_file = str(output_dir / "qa_trace.csv")
+            settings.log_file = str(output_dir / "qa_psychopy.log")
+            settings.json_file = str(output_dir / "qa_settings.json")
 
-    settings.add_subinfo(subject_data)
+        settings.triggers = cfg["trigger_config"]
+        settings.condition_generation = cfg.get("condition_generation_config", {})
+        settings.save_to_json()
 
-    # In QA mode, force deterministic artifact locations.
-    if mode == "qa" and output_dir is not None:
-        output_dir.mkdir(parents=True, exist_ok=True)
-        settings.res_file = str(output_dir / "qa_trace.csv")
-        settings.log_file = str(output_dir / "qa_psychopy.log")
-        settings.json_file = str(output_dir / "qa_settings.json")
-
-    # 4. Setup triggers (mock in QA)
-    settings.triggers = cfg["trigger_config"]
-    if mode in ("qa", "sim"):
-        trigger_runtime = _make_qa_trigger_runtime()
-    else:
-        trigger_runtime = initialize_triggers(cfg)
-
-    # 5. Set up window & input
-    win, kb = initialize_exp(settings)
-
-    # 6. Setup stimulus bank (skip TTS/voice conversion in QA)
-    stim_bank = StimBank(win, cfg["stim_config"])
-    if mode not in ("qa", "sim"):
-        stim_bank = stim_bank.convert_to_voice("instruction_text")
-    stim_bank = stim_bank.preload_all()
-
-    # 7. Setup controller across blocks
-    settings.controller = cfg["controller_config"]
-    settings.save_to_json()
-    controller = Controller.from_dict(settings.controller)
-
-    trigger_runtime.send(settings.triggers.get("exp_onset"))
-
-    # Instruction
-    instr = StimUnit("instruction_text", win, kb, runtime=trigger_runtime).add_stim(
-        stim_bank.get("instruction_text")
-    )
-    if mode not in ("qa", "sim"):
-        instr.add_stim(stim_bank.get("instruction_text_voice"))
-    instr.wait_and_continue()
-
-    all_data = []
-    for block_i in range(settings.total_blocks):
-        # 8. setup block
-        if mode not in ("qa", "sim"):
-            count_down(win, 3, color="black")
-
-        planned_conditions = controller.prepare_block(
-            block_idx=block_i,
-            n_trials=settings.trials_per_block,
-            seed=settings.block_seed[block_i],
+        trigger_runtime = (
+            initialize_triggers(mock=True) if options.mode in ("qa", "sim") else initialize_triggers(cfg)
         )
 
-        block = (
-            BlockUnit(
+        win, kb = initialize_exp(settings)
+
+        if settings.voice_enabled and options.mode not in ("qa", "sim"):
+            stim_bank = (
+                StimBank(win, cfg["stim_config"])
+                .convert_to_voice("instruction_text", voice=settings.voice_name)
+                .preload_all()
+            )
+        else:
+            stim_bank = StimBank(win, cfg["stim_config"]).preload_all()
+
+        trigger_runtime.send(settings.triggers.get("exp_onset"))
+
+        instruction = StimUnit("instruction_text", win, kb, runtime=trigger_runtime).add_stim(
+            stim_bank.get("instruction_text")
+        )
+        if settings.voice_enabled and options.mode not in ("qa", "sim"):
+            instruction.add_stim(stim_bank.get("instruction_text_voice"))
+        instruction.wait_and_continue()
+
+        all_data: list[dict] = []
+        weights, order, first_trial_label = _resolve_generation_settings(
+            settings=settings,
+            condition_generation=getattr(settings, "condition_generation", {}),
+        )
+        for block_i in range(settings.total_blocks):
+            if options.mode not in ("qa", "sim"):
+                count_down(win, 3, color="black")
+
+            block = BlockUnit(
                 block_id=f"block_{block_i}",
                 block_idx=block_i,
                 settings=settings,
                 window=win,
                 keyboard=kb,
+            ).generate_conditions(
+                condition_labels=list(settings.conditions),
+                weights=weights,
+                order=order,
             )
-                .add_condition(planned_conditions)
-                .on_start(lambda b: trigger_runtime.send(settings.triggers.get("block_onset")))
+            _stabilize_first_trial_label(block.conditions, first_trial_label)
+
+            block = (
+                block.on_start(lambda b: trigger_runtime.send(settings.triggers.get("block_onset")))
                 .on_end(lambda b: trigger_runtime.send(settings.triggers.get("block_end")))
                 .run_trial(
                     partial(
                         run_trial,
                         stim_bank=stim_bank,
-                        controller=controller,
                         trigger_runtime=trigger_runtime,
                         block_id=f"block_{block_i}",
                         block_idx=block_i,
@@ -153,40 +194,43 @@ def _run_impl(*, mode: str, output_dir: Path | None, cfg: dict, participant_id: 
                 .to_dict(all_data)
             )
 
-        block_trials = block.get_all_data()
+            metrics = _compute_block_metrics(block.get_all_data())
+            StimUnit("block_break", win, kb, runtime=trigger_runtime).add_stim(
+                stim_bank.get_and_format(
+                    "block_break",
+                    block_num=block_i + 1,
+                    total_blocks=settings.total_blocks,
+                    overall_accuracy=metrics["overall_accuracy"],
+                    target_hit_rate=metrics["target_hit_rate"],
+                    false_alarm_rate=metrics["false_alarm_rate"],
+                )
+            ).wait_and_continue()
 
-        # Calculate for the block feedback
-        hit_rate = sum(trial.get("target_hit", False) for trial in block_trials) / len(block_trials)
-        total_score = sum(trial.get("feedback_delta", 0) for trial in block_trials)
-        StimUnit("block", win, kb, runtime=trigger_runtime).add_stim(
+        final_metrics = _compute_block_metrics(all_data)
+        StimUnit("goodbye", win, kb, runtime=trigger_runtime).add_stim(
             stim_bank.get_and_format(
-                "block_break",
-                block_num=block_i + 1,
-                total_blocks=settings.total_blocks,
-                accuracy=hit_rate,
-                total_score=total_score,
+                "good_bye",
+                overall_accuracy=final_metrics["overall_accuracy"],
+                target_hit_rate=final_metrics["target_hit_rate"],
+                false_alarm_rate=final_metrics["false_alarm_rate"],
             )
-        ).wait_and_continue()
+        ).wait_and_continue(terminate=True)
 
-    final_score = sum(trial.get("feedback_delta", 0) for trial in all_data)
-    StimUnit("goodbye", win, kb, runtime=trigger_runtime).add_stim(
-        stim_bank.get_and_format("good_bye", total_score=final_score)
-    ).wait_and_continue(terminate=True)
+        trigger_runtime.send(settings.triggers.get("exp_end"))
 
-    trigger_runtime.send(settings.triggers.get("exp_end"))
-
-    # 9. Save data
-    df = pd.DataFrame(all_data)
-    df.to_csv(settings.res_file, index=False)
-
-    # 10. Close everything
-    trigger_runtime.close()
-    core.quit()
+        pd.DataFrame(all_data).to_csv(settings.res_file, index=False)
+        trigger_runtime.close()
+        core.quit()
 
 
 def main() -> None:
     task_root = Path(__file__).resolve().parent
-    options = _parse_args(task_root)
+    options = parse_task_run_options(
+        task_root=task_root,
+        description="Run Oddball Task (MMN/P3) in human/qa/sim mode.",
+        default_config_by_mode=DEFAULT_CONFIG_BY_MODE,
+        modes=MODES,
+    )
     run(options)
 
 
