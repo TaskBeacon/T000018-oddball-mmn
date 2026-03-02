@@ -19,12 +19,13 @@ def run_trial(
     cond = str(condition)
     trial_id = next_trial_id()
     keys = list(getattr(settings, "key_list", ["space"]))
-    expected_response = cond == "target"
+    expected_response_required = cond == "target"
+    expected_response_key = keys[0] if expected_response_required else None
     score_step = int(getattr(settings, "delta", 1))
 
     trial_data = {
         "condition": cond,
-        "expected_response": expected_response,
+        "expected_response": expected_response_key,
     }
     make_unit = partial(StimUnit, win=win, kb=kb, runtime=trigger_runtime)
 
@@ -40,7 +41,7 @@ def run_trial(
         condition_id=cond,
         task_factors={
             "condition": cond,
-            "expected_response": expected_response,
+            "expected_response": expected_response_key,
             "stage": "trial_fixation",
             "block_idx": block_idx,
         },
@@ -63,7 +64,7 @@ def run_trial(
         condition_id=cond,
         task_factors={
             "condition": cond,
-            "expected_response": expected_response,
+            "expected_response": expected_response_key,
             "stage": "oddball_response_window",
             "block_idx": block_idx,
         },
@@ -71,7 +72,7 @@ def run_trial(
     )
     stimulus.capture_response(
         keys=keys,
-        correct_keys=keys if expected_response else [],
+        correct_keys=[expected_response_key] if expected_response_required else [],
         duration=settings.stimulus_duration,
         onset_trigger=settings.triggers.get(f"{cond}_stimulus_onset"),
         response_trigger=settings.triggers.get(f"{cond}_key_press"),
@@ -80,9 +81,9 @@ def run_trial(
 
     response_key = stimulus.get_state("response", None)
     response_made = response_key in keys
-    if expected_response and response_made:
+    if expected_response_required and response_made:
         outcome = "hit"
-    elif expected_response and not response_made:
+    elif expected_response_required and not response_made:
         outcome = "miss"
     elif response_made:
         outcome = "false_alarm"
@@ -93,7 +94,8 @@ def run_trial(
     score_delta = score_step if accuracy else 0
 
     stimulus.set_state(
-        expected_response=expected_response,
+        expected_response=expected_response_key,
+        expected_response_required=expected_response_required,
         response_made=response_made,
         response_key=response_key,
         outcome=outcome,
@@ -123,7 +125,7 @@ def run_trial(
         condition_id=cond,
         task_factors={
             "condition": cond,
-            "expected_response": expected_response,
+            "expected_response": expected_response_key,
             "stage": "inter_trial_interval",
             "block_idx": block_idx,
         },
