@@ -24,6 +24,8 @@ This repair removes an inherited MID-style state machine (`cue -> anticipation -
 
 ## 2. Task Flow
 
+![Task Flow](task_flow.png)
+
 ### Block-Level Flow
 
 | Step | Description |
